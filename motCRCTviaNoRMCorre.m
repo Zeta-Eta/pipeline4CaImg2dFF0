@@ -119,7 +119,7 @@ MaxFrmsNum4uint16 = MaxFrmsNum(2, FOVpixNum); % 'uint16' memSize: 2 byte
 MaxFrmsNum4dAND16 = MaxFrmsNum(8 + 2, FOVpixNum);
 
 batchSize4load1st = [1,  20]; % batch size for load/run in Step 2
-batchSize4load2nd = [1,  20]; % batch size for load/run in Step 4
+batchSize4load2nd = [1,  20]; % batch size for load/run in Step 4 (should < min(trialSTT - trialEND))
 batchSize4load3rd = [1,   1]; % batch size for load/run in Step 6 (the 2nd is actually bin_num)
 batchSize4load4th = [1, 100]; % batch size for load/run in Step 8
 % ↑ higher batchSize4load will make the Motion Correction load/run slightly faster, 
