@@ -2,3 +2,7 @@
 A Pipeline for Calcium Imaging Data to dFF0 Data (via NoRMCorre and suite2p)
 
 The version of MATLAB should be higher than 2022a. (`LinearExtrap.m` used `@pagemldivide`)
+
+
+## 2023/05/15 ---update---
+* `...\Functions\NoRMCorre-DIY\Additional_Functions\read_bin_file_DIY.m`
