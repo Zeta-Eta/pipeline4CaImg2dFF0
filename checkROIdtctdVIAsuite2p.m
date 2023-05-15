@@ -58,8 +58,9 @@ roisIDerr = cellfun(@range, stat.xpix) >= minPixLen | ...
 
 roisIDerrID = find(roisIDerr);
 a = NaN(length(roisIDerrID), 1);
+bwI0 = zeros(flip(FOVpixDim));
 for i = 1:length(roisIDerrID)
-    bwI = XY2bwI(double(stat.xpix{roisIDerrID(i)} + 1), double(stat.ypix{roisIDerrID(i)} + 1), flip(FOVpixDim));
+    bwI = XY2bwI(double(stat.xpix{roisIDerrID(i)} + 1), double(stat.ypix{roisIDerrID(i)} + 1), flip(FOVpixDim), bwI0);
     bwI = regionprops(bwI, 'Image').Image;
     bwI = bwmorph(bwI, 'thicken', 1);
     if mean(bwI, 'all') < maxPixPrp
@@ -164,3 +165,7 @@ yModel = tempParams(1).*(tempParams(3).^xModel) + tempParams(2);
 plot(xModel, yModel, 'r');
 hold off;
 
+%% Functions
+function bwI = XY2bwI(X, Y, dimYX, bwI)
+bwI(sub2ind(dimYX, Y, X)) = 1;
+end

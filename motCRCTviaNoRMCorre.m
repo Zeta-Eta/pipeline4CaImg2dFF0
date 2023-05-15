@@ -34,7 +34,7 @@ stepNum = 1:10; % from 0 to 10
 saveImageON = 1;
 closeFigureON = 1;
 playMovieON = [0, 1]; % [Step 3, Step 5|9]
-moveOriH5ON = [1, 1];
+moveOriH5ON = [0, 1];
 trlNum4avg = 200; % Step 1
 thresh4avg = 0.95; % Step 1
 frmsResampNumByTrl = 50; % Step 1|4|5|6
@@ -88,7 +88,6 @@ h5GroupName = 'data'; % set to 'data' for the convenience of suite2p users.
 outputFormatFinal = 'bin'; % could skip the process of converting data from h5 file to bin file
 outputDataTypeFinal = 'int16'; % make sure the max of dynamic range will never be out of the datatype range. (in our data, the max is 2^13)
 bitSize = 2;
-dataTypeTrans = [outputDataTypeFinal, '=>', inputDataType];
 
 tempH5Name = 'tempH5\temp.h5';
 loadPathRAW = ['rawData\', Date, '\'];
@@ -1040,8 +1039,8 @@ if motCrct4thON
 
     if strcmp(outputFormatFinal, 'bin')
         parfor n = 1:trlsResampNum
-            frmsTemp = uint16(read_bin_file_DIY(saveName, frmsResampIDstt(n) + 1, frmsResampNumByTrl, ...
-                FOVpixDim, bitSize, inputDataType, dataTypeTrans));
+            frmsTemp = read_bin_file_DIY(saveName, frmsResampIDstt(n) + 1, frmsResampNumByTrl, ...
+                FOVpixDim, bitSize, outputDataTypeFinal, inputDataType, 3);
             frmsTempSum(:, :, n) = sum(frmsTemp, 3);
         end
     elseif strcmp(outputFormatFinal, 'h5')
@@ -1051,7 +1050,7 @@ if motCrct4thON
             frmsTempSum(:, :, n) = sum(frmsTemp, 3);
         end
     end
-        
+
     frmsTrlAvgd = sum(frmsTempSum, 3)./(trlsResampNum*frmsResampNumByTrl);
     frmsTempAvg = frmsTempSum./frmsResampNumByTrl;
     clear frmsTemp frmsTempSum;
